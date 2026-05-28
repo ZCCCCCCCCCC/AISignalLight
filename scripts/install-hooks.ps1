@@ -15,20 +15,66 @@ New-Item -ItemType Directory -Force -Path $BinDir | Out-Null
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot "signal.cmd") -Destination $HookCmd -Force
 
 # Merge fragment JSON into config, replacing __HOOK_CMD__ placeholder
+function ConvertTo-Hashtable($Obj) {
+    if ($Obj -is [System.Management.Automation.PSCustomObject]) {
+        $hash = @{}
+        foreach ($prop in $Obj.psobject.properties) {
+            $hash[$prop.Name] = ConvertTo-Hashtable $prop.Value
+        }
+        return $hash
+    } elseif ($Obj -is [array] -or $Obj -is [System.Collections.IList]) {
+        return @($Obj | ForEach-Object { ConvertTo-Hashtable $_ })
+    }
+    return $Obj
+}
+
 function Read-Json($Path) {
     if (-not (Test-Path $Path)) { return $null }
-    try { Get-Content -Raw -Path $Path | ConvertFrom-Json -AsHashtable -NoEnumerate }
+    try { 
+        $json = Get-Content -Raw -Path $Path | ConvertFrom-Json
+        return ConvertTo-Hashtable $json
+    }
     catch { $null }
+}
+
+function ConvertTo-JsonString($Obj, $Indent = "") {
+    $nextIndent = $Indent + "  "
+    if ($Obj -is [hashtable] -or $Obj -is [System.Collections.IDictionary] -or $Obj -is [System.Management.Automation.PSCustomObject]) {
+        $keys = @()
+        if ($Obj -is [System.Management.Automation.PSCustomObject]) {
+            $keys = @($Obj.psobject.properties.Name)
+        } else {
+            $keys = @($Obj.Keys)
+        }
+        if ($keys.Count -eq 0) { return "{}" }
+        $lines = foreach ($k in $keys) {
+            $val = if ($Obj -is [System.Management.Automation.PSCustomObject]) { ConvertTo-JsonString $Obj.$k $nextIndent } else { ConvertTo-JsonString $Obj[$k] $nextIndent }
+            "`n$nextIndent`"$k`": $val"
+        }
+        return "{" + ($lines -join ",") + "`n$Indent}"
+    } elseif ($Obj -is [array] -or $Obj -is [System.Collections.IList]) {
+        if ($Obj.Count -eq 0) { return "[]" }
+        $lines = foreach ($item in $Obj) {
+            $val = ConvertTo-JsonString $item $nextIndent
+            "`n$nextIndent$val"
+        }
+        return "[" + ($lines -join ",") + "`n$Indent]"
+    } elseif ($Obj -is [string]) {
+        $escaped = $Obj.Replace('\', '\\').Replace('"', '\"')
+        return "`"$escaped`""
+    } elseif ($Obj -is [bool]) {
+        if ($Obj) { return "true" } else { return "false" }
+    } elseif ($null -eq $Obj) {
+        return "null"
+    } else {
+        return $Obj.ToString()
+    }
 }
 
 function Write-Json($Path, $Data) {
     $dir = Split-Path -Parent $Path
     if ($dir) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
-    $json = if ($PSVersionTable.PSVersion.Major -ge 7) {
-        $Data | ConvertTo-Json -Depth 10
-    } else {
-        $Data | ConvertTo-Json -Depth 10
-    }
+    $json = ConvertTo-JsonString $Data
     Set-Content -LiteralPath $Path -Value $json -Encoding UTF8
 }
 

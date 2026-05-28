@@ -1,14 +1,19 @@
 {
   "ai-traffic-light-win": {
     "enabled": true,
-    "PreInvocation": [
+    "preInvocation": [
       {
         "type": "command",
         "command": "__HOOK_CMD__ set working antigravity",
         "timeout": 5
+      },
+      {
+        "type": "command",
+        "command": "cmd.exe /c exit 0",
+        "timeout": 1
       }
     ],
-    "PreToolUse": [
+    "preToolUse": [
       {
         "matcher": "*",
         "hooks": [
@@ -16,11 +21,16 @@
             "type": "command",
             "command": "__HOOK_CMD__ set working antigravity",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "cmd.exe /c exit 0",
+            "timeout": 1
           }
         ]
       }
     ],
-    "PostToolUse": [
+    "postToolUse": [
       {
         "matcher": "*",
         "hooks": [
@@ -28,22 +38,37 @@
             "type": "command",
             "command": "__HOOK_CMD__ set working antigravity",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "cmd.exe /c exit 0",
+            "timeout": 1
           }
         ]
       }
     ],
-    "PostInvocation": [
-      {
-        "type": "command",
-        "command": "__HOOK_CMD__ set working antigravity",
-        "timeout": 5
-      }
-    ],
-    "Stop": [
+    "postInvocation": [
       {
         "type": "command",
         "command": "__HOOK_CMD__ set idle antigravity",
         "timeout": 5
+      },
+      {
+        "type": "command",
+        "command": "cmd.exe /c exit 0",
+        "timeout": 1
+      }
+    ],
+    "stop": [
+      {
+        "type": "command",
+        "command": "__HOOK_CMD__ set idle antigravity",
+        "timeout": 5
+      },
+      {
+        "type": "command",
+        "command": "cmd.exe /c exit 0",
+        "timeout": 1
       }
     ]
   }
