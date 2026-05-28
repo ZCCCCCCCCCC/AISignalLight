@@ -1,0 +1,50 @@
+{
+  "ai-traffic-light-win": {
+    "enabled": true,
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "__HOOK_CMD__ set working antigravity",
+        "timeout": 5
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "__HOOK_CMD__ set working antigravity",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "__HOOK_CMD__ set working antigravity",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostInvocation": [
+      {
+        "type": "command",
+        "command": "__HOOK_CMD__ set working antigravity",
+        "timeout": 5
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "__HOOK_CMD__ set idle antigravity",
+        "timeout": 5
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.tmp-*/
+build/
+dist/
+*.spec
+widget.exe
+AISignalLight*.exe
+node_modules/
+target/
+

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AISignalLight</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-state="idle_off" data-glass="solid">
+  <div class="widget" id="widget" data-tauri-drag-region>
+    <div class="header" data-tauri-drag-region>
+      <span class="brand" id="src">AI</span>
+    </div>
+    <div class="light-area" data-tauri-drag-region>
+      <div class="light" id="led" data-tauri-drag-region></div>
+    </div>
+    <div class="status" id="status" data-tauri-drag-region>Idle</div>
+  </div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

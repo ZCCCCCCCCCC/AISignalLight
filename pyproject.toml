@@ -1,0 +1,10 @@
+[project]
+name = "ai-traffic-light-win"
+version = "0.1.0"
+description = "A lightweight Windows floating traffic-light widget for AI coding agents."
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+ai-traffic-light-win = "ai_traffic_light_win.cli:main"
+
