@@ -33,16 +33,12 @@ When multiple sources are active, the effective priority is `blocked > waiting >
 
 ### 1. Run the Widget
 
-Double-click `widget.exe`, or via CLI:
-
-```powershell
-python -m ai_traffic_light_win.cli widget
-```
+Download `AISignalLight-V0.1.exe` from [Releases](https://github.com/ZCCCCCCCCCC/AISignalLight/releases) and double-click to run. No dependencies required.
 
 - **Drag**: Move the floating widget anywhere.
 - **Double-click**: Bring the active AI tool's window to front (terminal or IDE).
-- **Right-click**: Quick menu — Restart / Open Folder / Quit.
-- **System Tray**: Tray icon color syncs with current state. Right-click the tray icon for Restart / Open Folder / Quit.
+- **Right-click**: Quick menu — Reset / Restart / Open Folder / Quit.
+- **System Tray**: Icon color syncs with current state. Right-click for menu.
 
 ### 2. Install Hooks for AI Agents
 

@@ -35,16 +35,12 @@
 
 ### 1. 启动悬浮窗
 
-直接双击 `widget.exe`，或通过命令行启动：
-
-```powershell
-python -m ai_traffic_light_win.cli widget
-```
+从 [Releases](https://github.com/ZCCCCCCCCCC/AISignalLight/releases) 下载 `AISignalLight-V0.1.exe`，双击运行即可，无需安装任何依赖。
 
 - **拖动**：可将窗口移到屏幕任意位置。
 - **双击**：自动聚焦到当前活跃 AI 工具的窗口（支持终端/IDE）。
-- **右键**：呼出菜单 — 重启 / 打开数据目录 / 退出。
-- **系统托盘**：右下角托盘图标颜色与窗口状态联动，右键菜单同样提供 重启 / 打开目录 / 退出。
+- **右键**：呼出菜单 — Reset / 重启 / 打开数据目录 / 退出。
+- **系统托盘**：图标颜色与窗口状态联动，右键菜单可操作。
 
 ### 2. 为各路 AI 工具安装 Hooks
 
