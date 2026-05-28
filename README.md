@@ -4,6 +4,13 @@
 
 A modern, lightweight Windows floating traffic-light widget for AI coding agents.
 
+<p align="center">
+  <img src="assets/working.png" width="100" alt="Working" />
+  <img src="assets/waiting.png" width="100" alt="Waiting" />
+  <img src="assets/Block.png" width="100" alt="Blocked" />
+  <img src="assets/Done.png" width="100" alt="Done" />
+</p>
+
 This project is a fresh Windows implementation providing a beautifully animated, always-on-top indicator for your AI agents. It uses **Tauri + Rust** for extreme performance and minimal footprint, featuring glassmorphism design and glowing animations.
 
 - **Agent Hooks**: AI tools report their current state using either CLI commands or local HTTP POST.

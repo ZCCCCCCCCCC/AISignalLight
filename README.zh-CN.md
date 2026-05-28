@@ -4,6 +4,13 @@
 
 一个专为 AI 编程助手打造的 Windows 桌面状态红绿灯。
 
+<p align="center">
+  <img src="assets/working.png" width="100" alt="Working" />
+  <img src="assets/waiting.png" width="100" alt="Waiting" />
+  <img src="assets/Block.png" width="100" alt="Blocked" />
+  <img src="assets/Done.png" width="100" alt="Done" />
+</p>
+
 本项目使用 **Tauri + Rust** 核心重构，拥有极低的内存占用和现代化的毛玻璃（Glassmorphism）悬浮 UI，并带有动态呼吸光晕效果。
 
 核心机制：
