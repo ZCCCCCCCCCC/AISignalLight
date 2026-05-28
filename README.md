@@ -2,6 +2,8 @@
 
 [English](README.en.md)
 
+[![Download](https://img.shields.io/badge/下载-Releases-blue)](https://github.com/ZCCCCCCCCCC/AISignalLight/releases)
+
 一个专为 AI 编程助手打造的 Windows 桌面状态红绿灯。
 
 <p align="center">

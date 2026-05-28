@@ -2,6 +2,8 @@
 
 [中文说明](README.md)
 
+[![Download](https://img.shields.io/badge/Download-Releases-blue)](https://github.com/ZCCCCCCCCCC/AISignalLight/releases)
+
 A modern, lightweight Windows floating traffic-light widget for AI coding agents.
 
 <p align="center">
