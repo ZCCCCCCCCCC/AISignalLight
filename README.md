@@ -50,7 +50,7 @@ AI 编程助手桌面状态指示灯 —— 一个小巧的悬浮窗，告诉你
 powershell -ExecutionPolicy Bypass -File .\scripts\install-hooks.ps1 -Target all
 ```
 
-支持：`claude`、`codex`、`cursor`、`antigravity`。装完重启对���的 AI 工具即可。
+支持：`claude`、`codex`、`cursor`、`antigravity`。装完重启对应的 AI 工具即可。
 
 ---
 
