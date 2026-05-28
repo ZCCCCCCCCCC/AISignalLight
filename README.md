@@ -1,8 +1,8 @@
 # AI Traffic Light Win
 
-[中文说明](README.zh-CN.md)
+[English](README.en.md)
 
-A modern, lightweight Windows floating traffic-light widget for AI coding agents.
+一个专为 AI 编程助手打造的 Windows 桌面状态红绿灯。
 
 <p align="center">
   <img src="assets/working.png" width="100" alt="Working" />
@@ -11,59 +11,62 @@ A modern, lightweight Windows floating traffic-light widget for AI coding agents
   <img src="assets/Done.png" width="100" alt="Done" />
 </p>
 
-This project is a fresh Windows implementation providing a beautifully animated, always-on-top indicator for your AI agents. It uses **Tauri + Rust** for extreme performance and minimal footprint, featuring glassmorphism design and glowing animations.
+本项目使用 **Tauri + Rust** 核心重构，拥有极低的内存占用和现代化的毛玻璃（Glassmorphism）悬浮 UI，并带有动态呼吸光晕效果。
 
-- **Agent Hooks**: AI tools report their current state using either CLI commands or local HTTP POST.
-- **State File**: A small local JSON file stores priorities (`idle`, `working`, `waiting`, or `blocked`).
-- **Floating Widget**: An always-on-top, draggable traffic light with a translucent background that watches state changes.
+核心机制：
 
-## States
+- **AI 状态拦截**：通过 Hooks 拦截各个 AI 工具的工作状态（支持 CLI 调用或 HTTP POST）。
+- **统一状态合并**：将多个 AI 源的并行状态汇聚为 `idle`, `working`, `waiting`, `blocked` 等优先级状态。
+- **全局悬浮窗**：在屏幕角落始终置顶显示当前 AI 引擎的运行状况。
 
-- 🔵 **Done / Stop**: Blue blinking. The task finished and is ready to review. Reverts to Idle after 30 seconds.
-- 🟢 **Working**: Green with a breathing glow. The agent is making normal progress.
-- 🟡 **Waiting**: Yellow blinking. The agent needs user confirmation, authorization, or input.
-- 🔴 **Blocked**: Red. An error or denial stopped progress.
-- ⚫ **Idle**: Dimmed grey. The system is completely idle.
+## 状态含义
 
-When multiple sources are active, the effective priority is `blocked > waiting > working > idle`.
+- 🔵 **Done / Stop** (蓝灯闪烁)：任务刚完成，请查阅。30秒后自动熄灭进入 Idle。
+- 🟢 **Working** (绿灯呼吸)：AI 正在思考或自动执行代码中。
+- 🟡 **Waiting** (黄灯闪烁)：等待你的授权、确认、输入或选择。
+- 🔴 **Blocked** (红灯常亮)：执行出错、被拒或意外中断，需要人工介入处理。
+- ⚫ **Idle** (暗色半透明)：完全空闲，没有正在进行或刚完成的任务。
 
-## Getting Started
+如果有多个 AI 引擎同时工作，系统会遵循优先级：`blocked > waiting > working > idle` 进行高亮展示。
 
-### 1. Run the Widget
+## 快速运行
 
-Double-click `widget.exe`, or via CLI:
+### 1. 启动悬浮窗
+
+直接双击 `widget.exe`，或通过命令行启动：
 
 ```powershell
 python -m ai_traffic_light_win.cli widget
 ```
 
-- **Drag**: Move the floating widget anywhere.
-- **Double-click**: Bring the active AI tool's window to front (terminal or IDE).
-- **Right-click**: Quick menu — Restart / Open Folder / Quit.
-- **System Tray**: Tray icon color syncs with current state. Right-click the tray icon for Restart / Open Folder / Quit.
+- **拖动**：可将窗口移到屏幕任意位置。
+- **双击**：自动聚焦到当前活跃 AI 工具的窗口（支持终端/IDE）。
+- **右键**：呼出菜单 — 重启 / 打开数据目录 / 退出。
+- **系统托盘**：右下角托盘图标颜色与窗口状态联动，右键菜单同样提供 重启 / 打开目录 / 退出。
 
-### 2. Install Hooks for AI Agents
+### 2. 为各路 AI 工具安装 Hooks
 
-Run the installation script in PowerShell to automatically deploy hooks to your AI tools:
+一键安装脚本可以自动为系统里的各个 AI 开发工具注入拦截器（Hooks）：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\install-hooks.ps1 -Target all
 ```
 
-Supported targets:
+目前支持的自动安装目标：
 
 - `claude` (Claude Code)
 - `codex` (OpenAI Codex)
 - `cursor` (Cursor Editor)
 - `antigravity` (Google Antigravity)
 
-*Restart the relevant app after installing hooks to take effect.*
+*注：安装完成后，请重启对应的 AI 工具或编辑器，使 Hook 拦截生效。*
 
-## Advanced Usage
+## 进阶功能
 
-### Local HTTP Bridge
+### 本地 HTTP Bridge 接口
 
-The widget runs a lightweight TCP server on port `57422`. External scripts or tools can send HTTP POST requests to change the light state:
+Tauri 悬浮窗启动后会在后台维护一个 TCP 服务器（端口 `57422`）。
+外部脚本或工具可以通过 HTTP POST 直接改变灯光状态：
 
 ```http
 POST http://127.0.0.1:57422/state
@@ -72,9 +75,9 @@ Content-Type: application/json
 {"state": "working", "source": "codexpp"}
 ```
 
-### Command Line Interface
+### CLI 命令行模式
 
-You can manually trigger states via CLI:
+你可以自己在任意脚本中通过命令行去拨动灯的状态：
 
 ```powershell
 python -m ai_traffic_light_win.cli set working codex
@@ -83,22 +86,22 @@ python -m ai_traffic_light_win.cli reset
 python -m ai_traffic_light_win.cli show
 ```
 
-## Architecture
+## 项目结构
 
 ```text
 ai_traffic_light_win/
 ├── ai_traffic_light_win/
-│   ├── cli.py          # Command line interface & state manager
-│   ├── state.py        # Logic for parsing and aging state priorities
-│   ├── hook_merge.py   # Utility to merge hook config fragments
-│   └── codex_trust.py  # Utility to enable and trust Codex hooks
-├── hooks/              # Hook fragments for Claude, Codex, Cursor, etc.
-├── tauri-widget/       # Tauri Frontend / Rust Backend source code
-│   ├── src/            # HTML/CSS/JS frontend
-│   └── src-tauri/      # Rust backend (HTTP Bridge & OS integration)
+│   ├── cli.py          # 命令行入口及状态处理逻辑
+│   ├── state.py        # 状态过期判断及优先级排队规则
+│   ├── hook_merge.py   # Hook JSON 合并辅助工具
+│   └── codex_trust.py  # 启用并信任 Codex hooks 工具
+├── hooks/              # 针对 Claude, Codex, Cursor 等的 Hook 挂载片段
+├── tauri-widget/       # Tauri 前端与 Rust 后端完整源码
+│   ├── src/            # HTML/CSS/JS 前端样式库
+│   └── src-tauri/      # Rust 后端（含窗口控制与 HTTP Server）
 ├── scripts/
 │   └── install-hooks.ps1
-├── widget.exe          # Compiled widget executable
+├── widget.exe          # 编译好的桌面悬浮窗
 ├── pyproject.toml
-└── README.md
+└── README.zh-CN.md
 ```
