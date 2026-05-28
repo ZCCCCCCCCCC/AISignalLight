@@ -1,10 +1,10 @@
-# AI Traffic Light Win
+# AISignalLight
 
 [中文说明](README.md)
 
 [![Download](https://img.shields.io/badge/Download-Releases-blue)](https://github.com/ZCCCCCCCCCC/AISignalLight/releases)
 
-A modern, lightweight Windows floating traffic-light widget for AI coding agents.
+A tiny floating desktop indicator that shows your AI coding agent's real-time status.
 
 <p align="center">
   <img src="assets/working.png" width="100" alt="Working" />
@@ -13,55 +13,46 @@ A modern, lightweight Windows floating traffic-light widget for AI coding agents
   <img src="assets/Done.png" width="100" alt="Done" />
 </p>
 
-This project is a fresh Windows implementation providing a beautifully animated, always-on-top indicator for your AI agents. It uses **Tauri + Rust** for extreme performance and minimal footprint, featuring glassmorphism design and glowing animations.
+## What
 
-- **Agent Hooks**: AI tools report their current state using either CLI commands or local HTTP POST.
-- **State File**: A small local JSON file stores priorities (`idle`, `working`, `waiting`, or `blocked`).
-- **Floating Widget**: An always-on-top, draggable traffic light with a translucent background that watches state changes.
+Your AI agent runs in the background. Is it working? Waiting for input? Crashed? Instead of alt-tabbing to check, this tiny light sits in the corner of your screen and shows you at a glance.
 
 ## States
 
-- 🔵 **Done / Stop**: Blue blinking. The task finished and is ready to review. Reverts to Idle after 30 seconds.
-- 🟢 **Working**: Green with a breathing glow. The agent is making normal progress.
-- 🟡 **Waiting**: Yellow blinking. The agent needs user confirmation, authorization, or input.
-- 🔴 **Blocked**: Red. An error or denial stopped progress.
-- ⚫ **Idle**: Dimmed grey. The system is completely idle.
+| State | Color | Meaning |
+|---|---|---|
+| Working | 🟢 Green | AI is running normally |
+| Waiting | 🟡 Yellow (blink) | Needs your confirmation or input |
+| Blocked | 🔴 Red | Error or permission denied |
+| Done | 🔵 Blue (blink) | Task finished, check the result (fades after 30s) |
+| Idle | ⚫ Gray | No active task |
 
-When multiple sources are active, the effective priority is `blocked > waiting > working > idle`.
+Priority when multiple agents run: Blocked > Waiting > Working > Idle.
 
-## Getting Started
+## Usage
 
-### 1. Run the Widget
+Download `AISignalLight-V0.1.exe` from [Releases](https://github.com/ZCCCCCCCCCC/AISignalLight/releases) and double-click. No installation, no dependencies.
 
-Download `AISignalLight-V0.1.exe` from [Releases](https://github.com/ZCCCCCCCCCC/AISignalLight/releases) and double-click to run. No dependencies required.
+**Interaction:**
 
-- **Drag**: Move the floating widget anywhere.
-- **Double-click**: Bring the active AI tool's window to front (terminal or IDE).
-- **Right-click**: Quick menu — Reset / Restart / Open Folder / Quit.
-- **System Tray**: Icon color syncs with current state. Right-click for menu.
+| Action | Result |
+|---|---|
+| Drag | Move the widget |
+| Double-click | Focus the active AI tool's window |
+| Right-click | Reset / Restart / Open Folder / Quit |
+| Tray right-click | Same, plus toggle auto-start |
 
-### 2. Install Hooks for AI Agents
-
-Run the installation script in PowerShell to automatically deploy hooks to your AI tools:
+**Install AI tool hooks:**
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\install-hooks.ps1 -Target all
 ```
 
-Supported targets:
+Supports Claude Code, Cursor, Codex, Antigravity. Restart the AI tool after installation.
 
-- `claude` (Claude Code)
-- `codex` (OpenAI Codex)
-- `cursor` (Cursor Editor)
-- `antigravity` (Google Antigravity)
+## Advanced
 
-*Restart the relevant app after installing hooks to take effect.*
-
-## Advanced Usage
-
-### Local HTTP Bridge
-
-The widget runs a lightweight TCP server on port `57422`. External scripts or tools can send HTTP POST requests to change the light state:
+**HTTP Bridge** on port `57422`:
 
 ```http
 POST http://127.0.0.1:57422/state
@@ -70,33 +61,24 @@ Content-Type: application/json
 {"state": "working", "source": "codexpp"}
 ```
 
-### Command Line Interface
-
-You can manually trigger states via CLI:
+**CLI:**
 
 ```powershell
-python -m ai_traffic_light_win.cli set working codex
-python -m ai_traffic_light_win.cli set waiting claude
+python -m ai_traffic_light_win.cli set working claude
 python -m ai_traffic_light_win.cli reset
 python -m ai_traffic_light_win.cli show
 ```
 
-## Architecture
+## Build from source
 
-```text
-ai_traffic_light_win/
-├── ai_traffic_light_win/
-│   ├── cli.py          # Command line interface & state manager
-│   ├── state.py        # Logic for parsing and aging state priorities
-│   ├── hook_merge.py   # Utility to merge hook config fragments
-│   └── codex_trust.py  # Utility to enable and trust Codex hooks
-├── hooks/              # Hook fragments for Claude, Codex, Cursor, etc.
-├── tauri-widget/       # Tauri Frontend / Rust Backend source code
-│   ├── src/            # HTML/CSS/JS frontend
-│   └── src-tauri/      # Rust backend (HTTP Bridge & OS integration)
-├── scripts/
-│   └── install-hooks.ps1
-├── widget.exe          # Compiled widget executable
-├── pyproject.toml
-└── README.md
+```bash
+cd tauri-widget
+npm install
+npm run tauri build
 ```
+
+Requires Rust, Node.js, Windows.
+
+## License
+
+MIT

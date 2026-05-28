@@ -1,10 +1,10 @@
-# AI Traffic Light Win
+# AISignalLight
 
 [English](README.en.md)
 
 [![Download](https://img.shields.io/badge/下载-Releases-blue)](https://github.com/ZCCCCCCCCCC/AISignalLight/releases)
 
-一个专为 AI 编程助手打造的 Windows 桌面状态红绿灯。
+AI 编程助手桌面状态指示灯 —— 一个小巧的悬浮窗，告诉你 AI 当前在干什么。
 
 <p align="center">
   <img src="assets/working.png" width="100" alt="Working" />
@@ -13,58 +13,48 @@
   <img src="assets/Done.png" width="100" alt="Done" />
 </p>
 
-本项目使用 **Tauri + Rust** 核心重构，拥有极低的内存占用和现代化的毛玻璃（Glassmorphism）悬浮 UI，并带有动态呼吸光晕效果。
+## 它是什么
 
-核心机制：
+写代码时 AI 助手的运行状态你是看不到的 —— 它在跑还是卡住了？在等你确认还是报错了？每次都要切回窗口看。
 
-- **AI 状态拦截**：通过 Hooks 拦截各个 AI 工具的工作状态（支持 CLI 调用或 HTTP POST）。
-- **统一状态合并**：将多个 AI 源的并行状态汇聚为 `idle`, `working`, `waiting`, `blocked` 等优先级状态。
-- **全局悬浮窗**：在屏幕角落始终置顶显示当前 AI 引擎的运行状况。
+这个小灯悬浮在桌面角落，通过 Hook 自动获取 AI 工具的实时状态，一眼就知道该不该切回去。
 
-## 状态含义
+## 状态
 
-- 🔵 **Done / Stop** (蓝灯闪烁)：任务刚完成，请查阅。30秒后自动熄灭进入 Idle。
-- 🟢 **Working** (绿灯呼吸)：AI 正在思考或自动执行代码中。
-- 🟡 **Waiting** (黄灯闪烁)：等待你的授权、确认、输入或选择。
-- 🔴 **Blocked** (红灯常亮)：执行出错、被拒或意外中断，需要人工介入处理。
-- ⚫ **Idle** (暗色半透明)：完全空闲，没有正在进行或刚完成的任务。
+| 颜色 | 状态 | 含义 |
+|---|---|---|
+| 🟢 绿色 | Working | AI 正在工作中 |
+| 🟡 黄色（闪烁） | Waiting | 等待你的确认或输入 |
+| 🔴 红色 | Blocked | 执行出错或被拒绝 |
+| 🔵 蓝色（闪烁） | Done | 任务完成，请查阅（30 秒后熄灭） |
+| ⚫ 灰色 | Idle | 空闲 |
 
-如果有多个 AI 引擎同时工作，系统会遵循优先级：`blocked > waiting > working > idle` 进行高亮展示。
+多个 AI 同时运行时，优先级：Blocked > Waiting > Working > Idle。
 
-## 快速运行
+## 使用
 
-### 1. 启动悬浮窗
+从 [Releases](https://github.com/ZCCCCCCCCCC/AISignalLight/releases) 下载 `AISignalLight-V0.1.exe`，双击运行。无需安装。
 
-从 [Releases](https://github.com/ZCCCCCCCCCC/AISignalLight/releases) 下载 `AISignalLight-V0.1.exe`，双击运行即可，无需安装任何依赖。
+**交互：**
 
-- **拖动**：可将窗口移到屏幕任意位置。
-- **双击**：自动聚焦到当前活跃 AI 工具的窗口（支持终端/IDE）。
-- **右键**：呼出菜单 — Reset / 重启 / 打开数据目录 / 退出。
-- **系统托盘**：图标颜色与窗口状态联动，右键菜单可操作。
+| 操作 | 效果 |
+|---|---|
+| 拖动 | 移动悬浮窗 |
+| 双击 | 切到当前活跃 AI 工具的窗口 |
+| 右键 | Reset / 重启 / 打开目录 / 退出 |
+| 托盘右键 | 同上，外加开关机自启 |
 
-### 2. 为各路 AI 工具安装 Hooks
-
-一键安装脚本可以自动为系统里的各个 AI 开发工具注入拦截器（Hooks）：
+**安装 AI 工具钩子：**
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\install-hooks.ps1 -Target all
 ```
 
-目前支持的自动安装目标：
+支持 Claude Code、Cursor、Codex、Antigravity。装完重启对应的 AI 工具生效。
 
-- `claude` (Claude Code)
-- `codex` (OpenAI Codex)
-- `cursor` (Cursor Editor)
-- `antigravity` (Google Antigravity)
+## 进阶
 
-*注：安装完成后，请重启对应的 AI 工具或编辑器，使 Hook 拦截生效。*
-
-## 进阶功能
-
-### 本地 HTTP Bridge 接口
-
-Tauri 悬浮窗启动后会在后台维护一个 TCP 服务器（端口 `57422`）。
-外部脚本或工具可以通过 HTTP POST 直接改变灯光状态：
+**HTTP Bridge**（端口 `57422`），外部脚本可直接改状态：
 
 ```http
 POST http://127.0.0.1:57422/state
@@ -73,33 +63,33 @@ Content-Type: application/json
 {"state": "working", "source": "codexpp"}
 ```
 
-### CLI 命令行模式
-
-你可以自己在任意脚本中通过命令行去拨动灯的状态：
+**CLI：**
 
 ```powershell
-python -m ai_traffic_light_win.cli set working codex
-python -m ai_traffic_light_win.cli set waiting claude
+python -m ai_traffic_light_win.cli set working claude
 python -m ai_traffic_light_win.cli reset
 python -m ai_traffic_light_win.cli show
 ```
 
+## 从源码构建
+
+```bash
+cd tauri-widget
+npm install
+npm run tauri build
+```
+
+要求：Rust、Node.js、Windows。
+
 ## 项目结构
 
 ```text
-ai_traffic_light_win/
-├── ai_traffic_light_win/
-│   ├── cli.py          # 命令行入口及状态处理逻辑
-│   ├── state.py        # 状态过期判断及优先级排队规则
-│   ├── hook_merge.py   # Hook JSON 合并辅助工具
-│   └── codex_trust.py  # 启用并信任 Codex hooks 工具
-├── hooks/              # 针对 Claude, Codex, Cursor 等的 Hook 挂载片段
-├── tauri-widget/       # Tauri 前端与 Rust 后端完整源码
-│   ├── src/            # HTML/CSS/JS 前端样式库
-│   └── src-tauri/      # Rust 后端（含窗口控制与 HTTP Server）
-├── scripts/
-│   └── install-hooks.ps1
-├── widget.exe          # 编译好的桌面悬浮窗
-├── pyproject.toml
-└── README.zh-CN.md
+├── ai_traffic_light_win/   # Python 状态引擎（CLI + Hook 合并）
+├── tauri-widget/           # 悬浮窗源码（Tauri + HTML/CSS/JS）
+├── hooks/                  # 各 AI 工具 Hook 模板
+└── scripts/                # 安装脚本
 ```
+
+## License
+
+MIT
