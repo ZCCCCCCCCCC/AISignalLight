@@ -44,7 +44,7 @@ AI 编程助手桌面状态指示灯 —— 一个小巧的悬浮窗，告诉你
 
 > 钩子是一段小命令，AI 工具在工作/等待/报错时自动调用，灯就会跟着变。
 
-首先确保 Python 3.10+ 已安装，然后跑：
+确保 `AISignalLight-V0.1.exe` 在运行，然后执行：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\install-hooks.ps1 -Target all

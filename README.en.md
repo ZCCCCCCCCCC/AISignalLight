@@ -44,7 +44,7 @@ To let Claude Code, Cursor, etc. report their status automatically, install hook
 
 Hooks are tiny scripts your AI tool calls when working, waiting, or hitting errors. The light follows along.
 
-Requires Python 3.10+. Run:
+Make sure `AISignalLight-V0.1.exe` is running, then run:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\install-hooks.ps1 -Target all
