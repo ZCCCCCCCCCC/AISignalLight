@@ -29,7 +29,7 @@ Priority across agents: Blocked > Waiting > Working > Idle.
 
 ## For Users
 
-Download `AISignalLight-V0.1.exe` from [Releases](https://github.com/ZCCCCCCCCCC/AISignalLight/releases), double-click to run. No installation, no dependencies.
+Download `AISignalLight-V0.1.zip` from [Releases](https://github.com/ZCCCCCCCCCC/AISignalLight/releases) and extract it locally.
 
 | Action | Result |
 |---|---|
@@ -44,11 +44,13 @@ To let Claude Code, Cursor, etc. report their status automatically, install hook
 
 Hooks are tiny scripts your AI tool calls when working, waiting, or hitting errors. The light follows along.
 
-Make sure `AISignalLight-V0.1.exe` is running, then run:
+Make sure `AISignalLight-V0.1.exe` is running, then **inside the extracted folder** run:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\install-hooks.ps1 -Target all
+powershell -ExecutionPolicy Bypass -File .\install-hooks.ps1 -Target all
 ```
+
+> Requires Python 3.10+.
 
 Targets: `claude`, `codex`, `cursor`, `antigravity`. Restart the AI tool afterwards.
 

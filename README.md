@@ -29,7 +29,7 @@ AI 编程助手桌面状态指示灯 —— 一个小巧的悬浮窗，告诉你
 
 ## 普通用户
 
-从 [Releases](https://github.com/ZCCCCCCCCCC/AISignalLight/releases) 下载 `AISignalLight-V0.1.exe`，双击运行，无依赖。
+从 [Releases](https://github.com/ZCCCCCCCCCC/AISignalLight/releases) 下载 `AISignalLight-V0.1.zip`，解压到本地。
 
 | 操作 | 效果 |
 |---|---|
@@ -44,11 +44,13 @@ AI 编程助手桌面状态指示灯 —— 一个小巧的悬浮窗，告诉你
 
 > 钩子是一段小命令，AI 工具在工作/等待/报错时自动调用，灯就会跟着变。
 
-确保 `AISignalLight-V0.1.exe` 在运行，然后执行：
+确保双击运行了 `AISignalLight-V0.1.exe`，然后**在解压后的文件夹内**执行：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\install-hooks.ps1 -Target all
+powershell -ExecutionPolicy Bypass -File .\install-hooks.ps1 -Target all
 ```
+
+> 需要 Python 3.10+。
 
 支持：`claude`、`codex`、`cursor`、`antigravity`。装完重启对应的 AI 工具即可。
 

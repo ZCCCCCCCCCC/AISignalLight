@@ -165,23 +165,12 @@ fn start_bridge_server() {
 }
 
 fn state_dir() -> PathBuf {
-    if let Ok(home) = std::env::var("AISIGNALLIGHT_HOME") {
-        return PathBuf::from(home);
-    }
-    // legacy env var
     if let Ok(home) = std::env::var("AI_TRAFFIC_LIGHT_WIN_HOME") {
         return PathBuf::from(home);
     }
     let local =
         std::env::var("LOCALAPPDATA").unwrap_or_else(|_| std::env::var("APPDATA").unwrap_or_default());
-    // try new name first, fallback to legacy
-    let new_dir = PathBuf::from(&local).join("AISignalLight");
-    let legacy_dir = PathBuf::from(&local).join("AI Traffic Light Win");
-    if new_dir.exists() || !legacy_dir.exists() {
-        new_dir
-    } else {
-        legacy_dir
-    }
+    PathBuf::from(local).join("AI Traffic Light Win")
 }
 
 // ── Position memory ──

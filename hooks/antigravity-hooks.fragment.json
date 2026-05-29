@@ -4,7 +4,7 @@
     "preInvocation": [
       {
         "type": "command",
-        "command": "__HOOK_CMD__ set working antigravity",
+        "command": "\"__HOOK_CMD__\" set working antigravity",
         "timeout": 5
       },
       {
@@ -19,7 +19,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "__HOOK_CMD__ set working antigravity",
+            "command": "\"__HOOK_CMD__\" set working antigravity",
             "timeout": 5
           },
           {
@@ -36,7 +36,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "__HOOK_CMD__ set working antigravity",
+            "command": "\"__HOOK_CMD__\" set working antigravity",
             "timeout": 5
           },
           {
@@ -50,7 +50,7 @@
     "postInvocation": [
       {
         "type": "command",
-        "command": "__HOOK_CMD__ set idle antigravity",
+        "command": "\"__HOOK_CMD__\" set idle antigravity",
         "timeout": 5
       },
       {
@@ -62,7 +62,7 @@
     "stop": [
       {
         "type": "command",
-        "command": "__HOOK_CMD__ set idle antigravity",
+        "command": "\"__HOOK_CMD__\" set idle antigravity",
         "timeout": 5
       },
       {

@@ -6,6 +6,7 @@ dist/
 *.spec
 widget.exe
 AISignalLight*.exe
+AISignalLight*.zip
 node_modules/
 target/
 

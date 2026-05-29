@@ -1,32 +1,32 @@
 {
   "beforeSubmitPrompt": [
     {
-      "command": "__HOOK_CMD__ set working cursor"
+      "command": "\"__HOOK_CMD__\" set working cursor"
     }
   ],
   "preToolUse": [
     {
-      "command": "__HOOK_CMD__ set working cursor"
+      "command": "\"__HOOK_CMD__\" set working cursor"
     }
   ],
   "postToolUse": [
     {
-      "command": "__HOOK_CMD__ set working cursor"
+      "command": "\"__HOOK_CMD__\" set working cursor"
     }
   ],
   "afterAgentResponse": [
     {
-      "command": "__HOOK_CMD__ set idle cursor"
+      "command": "\"__HOOK_CMD__\" set idle cursor"
     }
   ],
   "stop": [
     {
-      "command": "__HOOK_CMD__ set idle cursor"
+      "command": "\"__HOOK_CMD__\" set idle cursor"
     }
   ],
   "sessionEnd": [
     {
-      "command": "__HOOK_CMD__ set idle cursor"
+      "command": "\"__HOOK_CMD__\" set idle cursor"
     }
   ]
 }

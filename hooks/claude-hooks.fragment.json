@@ -4,7 +4,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "__HOOK_CMD__ set working claude"
+          "command": "\"__HOOK_CMD__\" set working claude"
         }
       ]
     }
@@ -15,7 +15,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "__HOOK_CMD__ set working claude"
+          "command": "\"__HOOK_CMD__\" set working claude"
         }
       ]
     }
@@ -26,7 +26,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "__HOOK_CMD__ set waiting claude"
+          "command": "\"__HOOK_CMD__\" set waiting claude"
         }
       ]
     }
@@ -37,7 +37,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "__HOOK_CMD__ set blocked claude"
+          "command": "\"__HOOK_CMD__\" set blocked claude"
         }
       ]
     }
@@ -48,7 +48,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "__HOOK_CMD__ set working claude"
+          "command": "\"__HOOK_CMD__\" set working claude"
         }
       ]
     }
@@ -59,7 +59,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "__HOOK_CMD__ set blocked claude"
+          "command": "\"__HOOK_CMD__\" set blocked claude"
         }
       ]
     }
@@ -69,7 +69,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "__HOOK_CMD__ set idle claude"
+          "command": "\"__HOOK_CMD__\" set idle claude"
         }
       ]
     }
@@ -79,7 +79,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "__HOOK_CMD__ set blocked claude"
+          "command": "\"__HOOK_CMD__\" set blocked claude"
         }
       ]
     }
@@ -89,7 +89,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "__HOOK_CMD__ set idle claude"
+          "command": "\"__HOOK_CMD__\" set idle claude"
         }
       ]
     }
